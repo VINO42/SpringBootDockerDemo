@@ -38,6 +38,20 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <docker>
+                        <builderRegistry>
+                            <username>vino42</username>
+                            <password>XXXXXXXXXX</password>
+                            <url>https://hub.docker.com</url>
+                         </builderRegistry>
+                    </docker>
+
+                    <imageName>vino42/springbootdockerdemo:bootdocker</imageName>
+                    <layers>
+                        <enabled>true</enabled>
+                    </layers>
+                </configuration>
             </plugin>
         </plugins>
     </build>

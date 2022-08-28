@@ -1,8 +1,8 @@
-#基于本地docker环境构建SpringBoot Docker镜像
+#基于mvn spring-boot:build-image 构建镜像
+
 ```
-mvn clean package -DskipTests
+mvn spring-boot:build-image
 ```
 
 ```
-docker build ./ -t vino42/springbootdockerdemo:dockerfile
 ```
