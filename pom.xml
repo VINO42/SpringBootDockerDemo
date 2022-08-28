@@ -10,7 +10,7 @@
     </parent>
     <groupId>io.github.vino42</groupId>
     <artifactId>SpringBootDockerDemo</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>fabric-SNAPSHOT</version>
     <name>SpringBootDockerDemo</name>
     <description>SpringBootDockerDemo</description>
     <properties>
@@ -33,11 +33,40 @@
     </dependencies>
 
     <build>
-        <finalName>SpringBootDockerDemo</finalName>
+        <finalName>springbootdockerdemo</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.40.2</version>
+                <configuration>
+                    <!--配置远程docker守护进程url 本地构建可以去掉-->
+<!--                    <dockerHost>http://harbor.io.registry.com</dockerHost>-->
+                    <!--认证配置,用于私有registry认证 本地构建可以去掉-->
+<!--                    <authConfig>
+                        <username>admin</username>
+                        <password>Harbor123</password>
+                    </authConfig>-->
+                    <!--镜像相关配置,支持多镜像 本地构建可以只留images这个标签-->
+                    <images>
+                        <!-- 单个镜像配置 -->
+                        <image>
+                            <!--镜像名(含版本号) 本地要有-->
+                            <name>${project.build.finalName}:${project.version}</name>
+                            <!--registry地址,用于推送,拉取镜像 本地构建可以去掉-->
+<!--                            <registry>docker</registry>-->
+                            <!--镜像build相关配置-->
+                            <build>
+                                <!--使用dockerFile文件-->
+                                <dockerFile>${project.basedir}/Dockerfile</dockerFile>
+                            </build>
+                        </image>
+                    </images>
+                </configuration>
             </plugin>
         </plugins>
     </build>
