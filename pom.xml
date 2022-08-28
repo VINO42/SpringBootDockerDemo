@@ -39,6 +39,65 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <from>
+                        <!--基础镜像名字-->
+                        <image>vino42/alpine_jdk8</image>
+                    </from>
+                    <to>
+<!--                        <image>registry.cn-hangzhou.aliyuncs.com/xxxxxx/springbootdockerdemo:jib</image>-->
+                        <image>springbootdockerdemo</image>
+                        <tags>
+                            <tag>jib</tag>
+                        </tags>
+                        <!--<auth>-->
+                        <!--<username>自己仓库的账号</username>-->
+                        <!--<password>写自己的仓库密码</password>-->
+                        <!--</auth>-->
+                        <!--
+                         其实这里还是建议 使用maven-setting的配置方式 请参照
+                         https://github.com/GoogleContainerTools/jib/tree/master/jib-maven-plugin#authentication-methods
+                         https://maven.apache.org/guides/mini/guide-encryption.html
+                        -->
+                    </to>
+                    <container>
+                        <!--指明主类-->
+                        <mainClass>io.github.vino42.SpringBootDockerDemoApplication</mainClass>
+                        <creationTime>USE_CURRENT_TIMESTAMP</creationTime>
+                        <!--  这里可以指定jvm参数-->
+                        <jvmFlags>
+                            <jvmFlag>-Dmy.property=example.value</jvmFlag>
+                            <jvmFlag>-Xms512m</jvmFlag>
+                            <jvmFlag>-Xmx2048m</jvmFlag>
+                        </jvmFlags>
+                        <!--                        指定容器端口-->
+                        <ports>
+                            <port>9999</port>
+                        </ports>
+                        <!--可以为镜像打label-->
+                        <labels>
+                        </labels>
+                    </container>
+                    <allowInsecureRegistries>true</allowInsecureRegistries>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <!-- 本地构建这个-->
+                            <goal>dockerBuild</goal>
+                            <!-- 远程构建是这个-->
+<!--
+                            <goal>build</goal>
+-->
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
